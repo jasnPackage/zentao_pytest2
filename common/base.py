@@ -117,6 +117,7 @@ class Base():
 
 
     def is_alert(self,timeout=3):
+        '''返回bool值'''
         try:
             result = WebDriverWait(self.driver,timeout,self.t).until(EC.alert_is_present())
             return result
