@@ -5,8 +5,13 @@ from pages.login_page import _login_result,_login,_get_alert
 
 
 
+# 以元祖形式参数化
+# test_login_data = [("admin","123456","admin"),("wux","111111","无锡")]
 
-test_login_data = [("admin","123456","admin"),("wux","111111","无锡")]
+
+# 以字典形式参数化
+test_login_data = [{"user":"admin","psw":"123456","expect":"admin"},
+                   {"user":"wux","psw":"111111","expect":"无锡"}]
 
 class TestLogin():
 
@@ -19,11 +24,11 @@ class TestLogin():
 
 
     # 先调用conftest.py中的startPage函数
-    @pytest.mark.parametrize("user,psw,expect",test_login_data)
-    def test_login_pass(self, startPage, driver, host,user,psw,expect):
+    @pytest.mark.parametrize("login_data",test_login_data)
+    def test_login_pass(self, startPage, driver, host,login_data):
         """禅道-登录成功案例"""
-        _login(driver, host, user, psw)
-        result2 = _login_result(driver, expect)
+        _login(driver, host, login_data["user"], login_data["psw"])
+        result2 = _login_result(driver, login_data["expect"])
         print("测试结果：%s" % result2)
         assert result2
 
