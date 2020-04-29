@@ -94,12 +94,13 @@ class Base():
         '''返回bool值'''
         if not isinstance(locator,tuple):
             print('locator参数类型错误，必须传元祖类型：loc = ("id","value1")')
-        else:
-            try:
-                result = WebDriverWait(self.driver,self.timeout,self.t).until(EC.text_to_be_present_in_element(locator,_text))
-                return result
-            except:
-                return False
+
+        try:
+            result = WebDriverWait(self.driver,self.timeout,self.t).until(EC.text_to_be_present_in_element(locator,_text))
+            print("result:%s"%result)
+            return result
+        except:
+            return False
 
 
 
@@ -229,3 +230,13 @@ class Base():
         '''鼠标悬停操作'''
         ele = self.findElement(locator)
         ActionChains(self.driver).move_to_element(ele).perform()
+
+
+
+    def highLightElement(self, locator):
+        # 封装好的高亮显示页面元素的方法
+        # 使用JavaScript代码将传入的页面元素对象的背景颜色和边框颜色分别
+        # 设置为绿色和红色
+        element = self.findElement(locator)
+        self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);",
+                              element, "background:green ;border:2px solid red;")

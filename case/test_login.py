@@ -33,7 +33,6 @@ class TestLogin():
         assert result2
 
 
-
     # 先调用conftest.py中的startPage函数
     def test_login_fail(self,startPage,driver,host):
         """禅道-登录失败案例：admin111-111111"""
@@ -41,8 +40,6 @@ class TestLogin():
         result1 = _get_alert(driver)
         print("测试结果：%s" % result1)
         assert "登录失败" in result1
-
-
 
 
 
