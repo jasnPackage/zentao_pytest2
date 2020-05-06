@@ -5,6 +5,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
+import pytest
+
+
+
 
 
 class Base():
@@ -16,14 +20,30 @@ class Base():
         self.t = 0.5
 
 
+    def wait_until_pageContainsElement(self,locator):
+        '''等到元素出现在页面中'''
+        if not isinstance(locator,tuple):
+            print('locator参数类型错误，必须传元祖类型：loc = ("id","value1")')
+        else:
+            try:
+                ele = WebDriverWait(self.driver,self.timeout,self.t).until(EC.visibility_of_element_located(locator))
+                return ele
+            except Exception as e:
+                print(e)
+                print("元素%s在页面中没有找到"%str(locator))
+                return False
+
+
+
     def findElement(self,locator):
         '''定位到元素，返回元素对象，没定位到，Timeout异常'''
         if not isinstance(locator,tuple):
             print('locator参数类型错误，必须传元祖类型：loc = ("id","value1")')
         else:
             print("正在定位元素信息：定位方式->%s，value值->%s"%(locator[0],locator[1]))
-            ele = WebDriverWait(self.driver,self.timeout,self.t).until(EC.presence_of_element_located(locator))
-            return ele
+            if self.wait_until_pageContainsElement(locator):
+                ele = WebDriverWait(self.driver,self.timeout,self.t).until(EC.presence_of_element_located(locator))
+                return ele
 
 
     def findElements(self,locator):
@@ -97,7 +117,6 @@ class Base():
 
         try:
             result = WebDriverWait(self.driver,self.timeout,self.t).until(EC.text_to_be_present_in_element(locator,_text))
-            print("result:%s"%result)
             return result
         except:
             return False

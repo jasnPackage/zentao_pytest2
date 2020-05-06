@@ -15,14 +15,6 @@ test_login_data = [{"user":"admin","psw":"123456","expect":"admin"},
 
 class TestLogin():
 
-    # @pytest.fixture(scope="function",autouse=True)
-    # def startPage(self,driver,host):
-    #     print("---让每个用例都从登录首页开始:---start!---")
-    #     driver.get(host+"/zentao/user-login.html")
-    #     driver.delete_all_cookies()
-    #     driver.refresh()
-
-
     # 先调用conftest.py中的startPage函数
     @pytest.mark.parametrize("login_data",test_login_data)
     def test_login_pass(self, startPage, driver, host,login_data):

@@ -93,6 +93,7 @@ def driver(request):
             _driver = webdriver.Chrome()
         else:
             _driver = webdriver.Chrome()
+        _driver.maximize_window()
         print("正在启动浏览器名称：%s" % name)
 
 

@@ -50,6 +50,9 @@ class AddBugPage(Base):
 
 
     def is_add_bug_sucess(self,_text):
+        '''从bug列表中取出第一个bug的text文本'''
+        bug_text = self.get_text(self.loc_new)
+        print("bug_text:%s"%bug_text)
         return self.is_text_in_element(self.loc_new,_text)
 
 
