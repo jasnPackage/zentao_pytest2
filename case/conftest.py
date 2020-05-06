@@ -2,6 +2,7 @@
 
 import pytest
 from pages.login_page import _login
+import os,shutil
 
 
 
@@ -9,6 +10,8 @@ from pages.login_page import _login
 @pytest.fixture(scope="session")
 def login(driver,host):
     _login(driver,host)
+
+
 
 
 

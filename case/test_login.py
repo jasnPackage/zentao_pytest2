@@ -16,6 +16,15 @@ test_login_data = [{"user":"admin","psw":"123456","expect":"admin"},
 class TestLogin():
 
     # 先调用conftest.py中的startPage函数
+    def test_login_fail(self, startPage, driver, host):
+        """禅道-登录失败案例：admin111-111111"""
+        _login(driver, host, "admin111", "111111")
+        result1 = _get_alert(driver)
+        print("测试结果：%s" % result1)
+        assert "登录失败" in result1
+
+
+    # 先调用conftest.py中的startPage函数
     @pytest.mark.parametrize("login_data",test_login_data)
     def test_login_pass(self, startPage, driver, host,login_data):
         """禅道-登录成功案例"""
@@ -23,15 +32,6 @@ class TestLogin():
         result2 = _login_result(driver, login_data["expect"])
         print("测试结果：%s" % result2)
         assert result2
-
-
-    # 先调用conftest.py中的startPage函数
-    def test_login_fail(self,startPage,driver,host):
-        """禅道-登录失败案例：admin111-111111"""
-        _login(driver,host,"admin111","111111")
-        result1 = _get_alert(driver)
-        print("测试结果：%s" % result1)
-        assert "登录失败" in result1
 
 
 

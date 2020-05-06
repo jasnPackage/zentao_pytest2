@@ -3,6 +3,7 @@ from selenium import webdriver
 import pytest
 from datetime import datetime
 from py._xmlgen import html
+import os,shutil
 
 
 _driver = None
@@ -110,3 +111,26 @@ def driver(request):
 @pytest.fixture(scope='session')
 def host(request):
     return request.config.getoption("--host")
+
+
+
+
+# 执行用例前，清空allure_raw文件夹
+@pytest.fixture(scope='session',autouse=True)
+def clearAllure():
+    print("清空allure_raw文件夹")
+    case_path = os.getcwd()
+    allureReport_path = os.path.join(case_path,r'report\allure_raw')
+    print("allureReport_path的路径：%s"%allureReport_path)
+
+    # 如果report下没有allure_raw文件夹，先创建
+    if not os.path.exists(allureReport_path):
+        os.makedirs(allureReport_path)
+    else:
+        shutil.rmtree(allureReport_path)  # 清空allure_raw文件夹
+        os.makedirs(allureReport_path)    # 清空完allure_raw文件夹后，allure_raw是空文件夹，会把allure_raw文件夹删掉，所以在清空完后再创建allure_raw文件夹文件夹
+
+
+
+
+
