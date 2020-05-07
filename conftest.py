@@ -1,7 +1,7 @@
 #coding:utf-8
 from selenium import webdriver
 import pytest
-from datetime import datetime
+from selenium.webdriver.chrome.options import Options
 from py._xmlgen import html
 import os,shutil
 
@@ -81,7 +81,32 @@ def _capture_screenshot():
 
 
 
+# 有界面浏览器
+# @pytest.fixture(scope='session')
+# def driver(request):
+#     '''定义全局driver参数'''
+#     global _driver
+#     if _driver is None:
+#         name = request.config.getoption("--browser")
+#         if name == "firefox":
+#             _driver = webdriver.Firefox()
+#         elif name == "chrome":
+#             _driver = webdriver.Chrome()
+#         else:
+#             _driver = webdriver.Chrome()
+#         _driver.maximize_window()
+#         print("正在启动浏览器名称：%s" % name)
+#
+#
+#     def fn():
+#         print("当全部用例执行完之后：teardown quit driver！")
+#         _driver.quit()
+#     request.addfinalizer(fn)
+#     return _driver
 
+
+
+# 无界面浏览器
 @pytest.fixture(scope='session')
 def driver(request):
     '''定义全局driver参数'''
@@ -91,9 +116,13 @@ def driver(request):
         if name == "firefox":
             _driver = webdriver.Firefox()
         elif name == "chrome":
-            _driver = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            _driver = webdriver.Chrome(options=chrome_options)
         else:
-            _driver = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            _driver = webdriver.Chrome(options=chrome_options)
         _driver.maximize_window()
         print("正在启动浏览器名称：%s" % name)
 
@@ -103,6 +132,7 @@ def driver(request):
         _driver.quit()
     request.addfinalizer(fn)
     return _driver
+
 
 
 

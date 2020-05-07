@@ -3,14 +3,21 @@
 from pages.add_bug_page import AddBugPage
 import pytest
 import time
+import allure
 
 """
 case/test_add_bug.py文件
 添加bug功能流程
 """
 
+
+@allure.epic("添加bug测试用例")
+@allure.feature("新增bug")
 class TestAddBug():
 
+
+    @allure.story("添加bug成功场景")
+    @allure.title("添加bug成功")
     @pytest.mark.usefixtures("login") # 先登录
     def test_add_bug(self,driver):
 

@@ -2,7 +2,7 @@
 
 from selenium import webdriver
 from common.base import Base
-import time
+import time,allure
 
 
 class AddBugPage(Base):
@@ -22,6 +22,7 @@ class AddBugPage(Base):
     loc_new = ("xpath", ".//*[@id='bugList']/tbody/tr[1]/td[4]/a")
 
 
+    @allure.step("输入bug必填项")
     def add_bug(self,title="测试提交BUG"):
         self.click(self.loc_test)
         self.click(self.loc_bug)
@@ -48,7 +49,7 @@ class AddBugPage(Base):
         self.driver.execute_script("arguments[0].click();",save_button)
 
 
-
+    @allure.step("验证bug列表中有添加的bug")
     def is_add_bug_sucess(self,_text):
         '''从bug列表中取出第一个bug的text文本'''
         bug_text = self.get_text(self.loc_new)

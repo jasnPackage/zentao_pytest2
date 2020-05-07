@@ -3,6 +3,7 @@
 from selenium import webdriver
 from common.base import Base
 import time
+import allure
 
 # ---------------定位元素信息-------------------- #
 loc1 = ("id","account")
@@ -12,6 +13,7 @@ loc3 = ("xpath","//*[@id='submit']")
 result_loc = ("xpath", ".//*[@id='userMenu']/a")
 
 
+@allure.step("登录")
 def _login(driver,host,user="admin",psw="123456"):
     '''普通登录函数'''
     zen = Base(driver)
@@ -22,6 +24,7 @@ def _login(driver,host,user="admin",psw="123456"):
     time.sleep(2)
 
 
+@allure.step("登录成功结果判断")
 def _login_result(driver,_text):
     '''
     登录成功后，获取当前页面的用户名，判断用户名
@@ -34,7 +37,7 @@ def _login_result(driver,_text):
     return r
 
 
-
+@allure.step("登录失败结果判断")
 def _get_alert(driver):
     '''判断alert在不在,存在返回text文本内容，不存在返回空字符'''
     zen = Base(driver)
